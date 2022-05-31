@@ -1,3 +1,5 @@
+import pymysql.cursors
+
 class Config(object):
     pass
 
@@ -9,4 +11,4 @@ class ProdConfig(Config):
 class DevConfig(Config):
     DEBUG = True
     # need to get the con string to mysql
-    conStr = ""
+    conStr = "mysql+pymysql://holmesDev:Holmes123@localhost:3306/holmes"
