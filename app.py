@@ -2,6 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from AppConfig import DevConfig
 from flask_bootstrap import Bootstrap
+from flask import render_template
 
 
 app = Flask(__name__)
@@ -110,7 +111,8 @@ class Design(db.Model):
 
 @app.route('/')
 def home():  # put application's code here
-    return '<h1>Holmes Restoration</h1>'
+    return render_template('home.htmnl')
+
 
 
 if __name__ == '__main__':

@@ -1,6 +1,8 @@
 from app import Decking, db
 from sqlalchemy import update
 
+# add method for pagenation of decking for selection on web page
+
 class DeckingDB:
     @staticmethod
     def GetDeckings():
