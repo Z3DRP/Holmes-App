@@ -1,0 +1,30 @@
+<table class="table mt-2 table-striped table-bordered">
+    <thead>
+        <tr>Product Code</tr>
+        <tr>Name</tr>
+        <tr>Deck Type</tr>
+        <tr>Price Per Sqft</tr>
+        <tr>Image</tr>
+    </thead>
+    <tbody>
+        {% for deck in decks %}
+        <tr>
+            <td>
+                <a href="{{ url_for('GetDeck',id=deck.Id) }}">
+                    {{ deck.Product_Code }}
+                </a>
+            </td>
+            <td>
+                <a href="{{ url_for('GetDeck', id=deck.Id) }}">
+                    {{ deck.Name }}
+                </a>
+            </td>
+            <td><a>{{ deck.Deck_Type }}</a></td>
+            <td><a>{{ deck.Price_Per_Sqft }}</a></td>
+            <td><a>{{ deck.Image }}</a></td>
+        </tr>
+    </tbody>
+</table>
+<div class="row">
+    <a class="bp3-button-text" href="{{ url_for('Home.html' )}}"></a>
+</div>

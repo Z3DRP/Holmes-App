@@ -3,6 +3,10 @@ from flask_sqlalchemy import SQLAlchemy
 from AppConfig import DevConfig
 from flask_bootstrap import Bootstrap
 from flask import render_template
+from DataAccess import DeckingDB as d
+from DataAccess import RailingDB as r
+from DataAccess import CustomerDB as c
+from DataAccess import DesignDB as da
 
 
 app = Flask(__name__)
@@ -37,6 +41,9 @@ class Customer(db.Model):
 
     def __repr__(self):
         return "<Customer '{}' '{}'>".format(self._fname, self._lname)
+
+    def GetFullname(self):
+        return self._fname + " " + self._lname
 
 
 class Decking(db.Model):
@@ -82,6 +89,9 @@ class Railing(db.Model):
     def __repr__(self):
         return "<Railing '{}' '{}'>".format(self._prodCode, self._name)
 
+    # need to create a currency format func
+    def FormatPrice(self):
+        pass
 
 class Design(db.Model):
     __tablename__ = 'Designs'
@@ -94,8 +104,9 @@ class Design(db.Model):
     width = db.column(db.DECIMAL, nullable=False)
     square_ft = db.column(db.DECIMAL, nullable=False)
     start_date = db.column(db.DateTime, nullable=False)
+    estimate = db.column(db.DECIMAL, nullable=False, index=True)
 
-    def __init__(self, customerid, deckid, railid, len, width, sqft, start):
+    def __init__(self, customerid, deckid, railid, len, width, sqft, start, est):
         self._custmrId = customerid
         self._deckId = deckid
         self._railId = railid
@@ -103,6 +114,7 @@ class Design(db.Model):
         self._width = width
         self._sqFt = sqft
         self.start_date = start
+        self._estimate = est
 
     def __repr(self):
         return "<Design '{}' '{}' '{}'>".format(self._custmrId, self._deckId,
@@ -111,8 +123,71 @@ class Design(db.Model):
 
 @app.route('/')
 def home():  # put application's code here
-    return render_template('home.htmnl')
+    return render_template('home.html')
 
+
+@app.route('/get-decking')
+def GetDecking():
+    decks = Decking.query.order_by(Decking.name.desc())
+    return render_template('GetDecking.html', decks=decks)
+
+
+@app.route('/get-deck/<int:id>')
+def GetDeck(id):
+    if not id > 0:
+        decks = Decking.query.order_by(Decking.name.desc())
+        return render_template('GetDecking.html', decks=decks)
+    else:
+        deck = d.DeckingDB.GetDecking(id)
+        return render_template('GetDeck.html', deck=deck)
+
+
+@app.route('/get-railing')
+def GetRailing():
+    rails = Railing.query.order_by(Railing.name.desc())
+    return render_template('GetRailing.html', rails=rails)
+
+
+@app.route('/get-railing/<int:id>')
+def GetRail(id):
+    if not id > 0:
+        rail = Railing.query.order_by(Railing.name.desc())
+        return render_template('GetRailing.html', rails=rail)
+    else:
+        rail = r.RailingDB.GetRailing(id)
+        return render_template('GetRail.html', rail=rail)
+
+
+@app.route('/get-customer')
+def GetCustomers():
+    customers = Customer.query.order_by(Customer.last_name.desc())
+    return render_template('GetCustomers.html', customers=customers)
+
+
+@app.route('/get-customer/<int:id>')
+def GetCustomer(id):
+    if not id > 0:
+        customers = Customer.query.order_by(Customer.last_name.desc())
+        return render_template('GetCustomers.html', customers=customers)
+    else:
+        customer = c.CustomerDB.GetCustomer(id)
+        return render_template('GetCustomer.html', customer=customer)
+
+
+@app.route('/get-designs')
+def GetDesigns():
+    designs = Design.query.order_by(Design.start_date.desc())
+    return render_template('GetDesigns.html', designs=designs)
+
+
+@app.route('/get-designs/<int:id>')
+def GetDesign(id):
+    if not id > 0:
+        design = Design.query.order_by(Design.start_date.desc())
+        return render_template('GetDesigns.html', designs=design)
+    else:
+        design = da.DesignDB.GetDesign(id)
+        return render_template('GetDesign.html', design=design)
 
 
 if __name__ == '__main__':

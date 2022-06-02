@@ -1,0 +1,45 @@
+<table class="table mt-e table-striped table-bordered">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Customer Id</th>
+        <th>Decking Id</th>
+        <th>Railing Id</th>
+        <th>Length</th>
+        <th>Width</th>
+        <th>Square Feet</th>
+        <th>Start Date</th>
+        <th>Estimate</th>
+    </tr>
+    </thead>
+    <tbody>
+        {% for design in designs %}
+        <tr>
+            <td>
+                <a href="{{ url_for('GetDesign', id=design.Id) }}">
+                    {{ design.Id }}
+                </a>
+            </td>
+            <td>
+                <a href="{{ url_for('GetCustomer',id=design.Customer_Id) }}">
+                    {{ design.Customer_Id }}
+                </a>
+            </td>
+            <td>
+                <a href="{{ url_for('GetDeck', id=design.Deck_Id) }}">
+                    {{ design.Deck_Id }}
+                </a>
+            </td>
+            <td>
+                <a href="{{ url_for('GetRail', id=design.Rail_Id) }}">
+                    {{ desing.Rail_Id }}
+                </a>
+            </td>
+            <td><a>{{ design.Length }}</a></td>
+            <td><a>{{ design.Width }}</a></td>
+            <td><a>{{ design.Square_Feet }}</a></td>
+            <td><a>{{ design.Start_Date }}</a></td>
+            <td><a>{{ design.Estimate }}</a></td>
+        </tr>
+    </tbody>
+</table>

@@ -19,16 +19,18 @@ class DesignDB:
         return design
 
     @staticmethod
-    def AddDesign(customerID, deckID, railID, len, width, sqft, start):
+    def AddDesign(customerID, deckID, railID, len, width, sqft, start, est):
         try:
-            design = Design(customerID, deckID, railID, len, width,sqft,start)
+            design = Design(
+                customerID, deckID, railID, len, width, sqft, start, est)
             db.session.add(design)
             db.session.commit()
         except ConnectionError:
             raise Exception("An error occurred while connecting to database")
 
     @staticmethod
-    def UpdateDesign(did, customerID, deckID, railID, len, width, sqft, start):
+    def UpdateDesign(
+            did, customerID, deckID, railID, len, width, sqft, start, est):
         try:
             rowsAffected = update('Designs').where(
                 Design.id == did).values(
@@ -39,7 +41,8 @@ class DesignDB:
                     "Length": len,
                     "Width": width,
                     "Square_Ft": sqft,
-                    "Start_Date": start
+                    "Start_Date": start,
+                    "Estimate": est
                 })
         except ConnectionError:
             raise Exception("An error occurred while connecting to database")

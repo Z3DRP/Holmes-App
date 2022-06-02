@@ -1,0 +1,14 @@
+{% import 'macros.html' as macros %}
+
+<div class="row">
+    <div class="col">
+        <h5>Previous Jobs</h5>
+    </div>
+</div>
+<ul class="list-group">
+    {% for post in recent %}
+    <li class="list-group-item">
+        <a href="{{ url_for('job', job_id=job.Id) }}">{{ job.Image }}</a>
+    </li>
+    {% endfor %}
+</ul>

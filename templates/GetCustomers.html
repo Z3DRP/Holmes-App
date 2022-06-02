@@ -1,0 +1,36 @@
+<table class="table mt-2 table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+            <th>Street</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Zipcode</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for customer in customers %}
+        <tr>
+            <td>
+            <a href="{{ url_for('GetCustomer',id=customer.id) }}">
+                {{ customer.GetFullname }}</a>
+        </td>
+        <td><a>{{ customer.Email }}</a></td>
+
+        <td>{{ customer.Phone_Number }}</td>
+
+        <td>{{ customer.Street_Address }}</td>
+
+        <td>{{ customer.City }}</td>
+
+        <td>{{ customer.State }}</td>
+
+        <td>{{ customer.Zipcode }}</td>
+        </tr>
+    </tbody>
+</table>
+<div class="row">
+    <a class="bp3-button-text" href="{{ url_for('Home.html' )}}"></a>
+</div>

@@ -1,0 +1,27 @@
+<table class="table mt-2 table-striped table-bordered">
+    <thead>
+        <tr>Product Code</tr>
+        <tr>Name</tr>
+        <tr>Deck Type</tr>
+        <tr>Price Per Sqft</tr>
+        <tr>Image</tr>
+    </thead>
+    <tbody>
+        {% for rail in rails %}
+        <tr>
+            <td>
+                <a href="{{ url_for('GetRail',id=rail.Id) }}">
+                    {{ rail.Product_Code }}
+                </a>
+            </td>
+            <td>
+                <a href="{{ url_for('GetRail', id=rail.Id) }}">
+                    {{ rail.Name }}
+                </a>
+            </td>
+            <td><a>{{ rail.Deck_Type }}</a></td>
+            <td><a>{{ rail.Price_Per_Sqft }}</a></td>
+            <td><a>{{ rail.Image }}</a></td>
+        </tr>
+    </tbody>
+</table>
